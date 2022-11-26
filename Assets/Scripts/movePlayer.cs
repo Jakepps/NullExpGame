@@ -26,25 +26,6 @@ public class movePlayer : MonoBehaviour
     
     Vector2 newPos = transform.position + new Vector3(movement.x, movement.y, 0);
 
-    if (camera.transform.position.x+10 < newPos.x) {
-        newPos.x = camera.transform.position.x+10;
-    } else if (camera.transform.position.x-10 > newPos.x) {
-        newPos.x = camera.transform.position.x-10;
-    }
-
-    if (camera.transform.position.y+5 < newPos.y) {
-        newPos.y = camera.transform.position.y+5;
-    } else if (camera.transform.position.y-5 > newPos.y) {
-        newPos.y = camera.transform.position.y-5;
-    }
-
     transform.position = newPos;
   }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        print(1);
-        transform.position = lastMove;
-        
-    }
 }
