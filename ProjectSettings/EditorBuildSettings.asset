@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SwitchCatscense.unity
     guid: 71197b0425721ed489185767ed9fa967
+  - enabled: 1
+    path: Assets/oneLevel.unity
+    guid: eef8e7516be0c9d42800ea3362aa2458
   m_configObjects: {}
