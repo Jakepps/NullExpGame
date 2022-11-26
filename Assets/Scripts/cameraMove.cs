@@ -21,9 +21,9 @@ public class cameraMove : MonoBehaviour
     void Update()
     {
         if (isCameraMove)  {
-            if (player.transform.position.x - camera.transform.position.x > 5) {
-                print(new Vector3(player.transform.position.x - 5, camera.transform.position.y, -10));
-                camera.transform.position = new Vector3(player.transform.position.x - 5, camera.transform.position.y, -10);  
+            if (player.transform.position.x - camera.transform.position.x > 0) {
+                print(new Vector3(player.transform.position.x - 0, camera.transform.position.y, -10));
+                camera.transform.position = new Vector3(player.transform.position.x - 0, camera.transform.position.y, -10);  
             }
             if (camera.transform.position.x > stopPos[nowStop]) {
                 print(3);
