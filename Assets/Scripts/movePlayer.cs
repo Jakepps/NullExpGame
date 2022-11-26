@@ -8,6 +8,8 @@ public class movePlayer : MonoBehaviour
 
   private Vector2 movement;
 
+  public GameObject camera;
+
     
   private Vector3 lastMove;
 
@@ -21,9 +23,22 @@ public class movePlayer : MonoBehaviour
       speed.x * inputX,
       speed.y * inputY);
 
+    
+    Vector2 newPos = transform.position + new Vector3(movement.x, movement.y, 0);
 
-    lastMove = transform.position; 
-    transform.position += new Vector3(movement.x, movement.y, 0);
+    if (camera.transform.position.x+10 < newPos.x) {
+        newPos.x = camera.transform.position.x+10;
+    } else if (camera.transform.position.x-10 > newPos.x) {
+        newPos.x = camera.transform.position.x-10;
+    }
+
+    if (camera.transform.position.y+5 < newPos.y) {
+        newPos.y = camera.transform.position.y+5;
+    } else if (camera.transform.position.y-5 > newPos.y) {
+        newPos.y = camera.transform.position.y-5;
+    }
+
+    transform.position = newPos;
   }
 
     void OnCollisionEnter2D(Collision2D collision)

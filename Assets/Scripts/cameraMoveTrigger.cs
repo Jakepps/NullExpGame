@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class cameraMoveTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public bool timeToMove = false;
+
+    public Vector2 newPosition =new  Vector2(15, 0);
+    public GameObject camera;
+
+    void Update(){
+        if (timeToMove) {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter2D(Collider2D col)
     {
-        
+        if (!timeToMove) {
+            timeToMove = !timeToMove;
+
+
+        }
     }
 }
