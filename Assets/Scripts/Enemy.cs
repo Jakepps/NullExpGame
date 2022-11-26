@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
     //take damage
     public void TakeDamage(int damage)
     {
+        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.2f);
         health -= damage;
         if (health <= 0)
         {
@@ -107,6 +108,7 @@ public class Enemy : MonoBehaviour
 
 
         gameObject.GetComponentInChildren<SpriteRenderer>().flipX = target.x < transform.position.x;
+
         if (Vector2.Distance(transform.position, target) < 15)
         {
             transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);

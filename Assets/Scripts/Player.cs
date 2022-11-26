@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     //take damage
     public void TakeDamage(int damage)
     {
-        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.5f);
+        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.2f);
         health -= damage;
         if (health <= 0)
         {
@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+
+        //exit in the app
+        Application.Quit();
     }
 
 
