@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    int health = 100;
+    float health = 100;
+
+    float attackColdDown = 0.5f;
 
     // Attack others players by radius 10
     void Attack()
@@ -20,23 +22,28 @@ public class Player : MonoBehaviour
         //     transform.position + new Vector3((flipX ? -1 : 1) * 1.5f, 1, 0),
         //     Quaternion.identity
         // );
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3((flipX ? -1 : 1) * 1.5f, 0, 0), 1.5f);
-
-        Debug.Log(hitColliders.Length);
-        foreach (var hitCollider in hitColliders)
+        if (attackColdDown < 0.1)
         {
-            // if enemy is found
-            if (hitCollider.gameObject.tag == "Enemy")
-            {
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3((flipX ? -1 : 1) * 1.75f, 0, 0), 1f);
 
-                Debug.Log("Enemy found");
-                // get enemy script
-                Enemy enemy = hitCollider.gameObject.GetComponent<Enemy>();
-                // attack enemy
-                enemy.TakeDamage(10);
-                enemy.TakeImpulse(new Vector2((flipX ? -1 : 1) * 1000f, 0));
+            Debug.Log(hitColliders.Length);
+            foreach (var hitCollider in hitColliders)
+            {
+                // if enemy is found
+                if (hitCollider.gameObject.tag == "Enemy")
+                {
+                    attackColdDown = 0.5f;
+                    Debug.Log("Enemy found");
+                    // get enemy script
+                    Enemy enemy = hitCollider.gameObject.GetComponent<Enemy>();
+                    // attack enemy
+                    gameObject.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
+                    enemy.TakeDamage(10);
+                    enemy.TakeImpulse(new Vector2((flipX ? -1 : 1) * 1000f, 0));
+                }
             }
         }
+
 
 
 
@@ -45,7 +52,7 @@ public class Player : MonoBehaviour
     //take damage
     public void TakeDamage(int damage)
     {
-        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.5f);
+        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.2f);
         health -= damage;
         if (health <= 0)
         {
@@ -77,6 +84,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (attackColdDown > 0)
+        {
+            attackColdDown -= Time.deltaTime;
+        }
+
+        health += Time.deltaTime;
+
         // Attack on press left mouse button
         if (Input.GetMouseButtonDown(0))
         {
