@@ -10,25 +10,53 @@ public class movePlayer : MonoBehaviour
 
   public GameObject camera;
 
+  private bool shouldMove = true;
 
+
+  void Start() {
+  }
   void Update()
   {
-    float inputX = Input.GetAxis("Horizontal");
-    float inputY = Input.GetAxis("Vertical");
+    int inputX, inputY;
 
-    movement = new Vector2(
-      speed.x * inputX,
-      speed.y * inputY);
+    if (Input.GetKey(KeyCode.A))
+        inputX = -1;
+    else if (Input.GetKey(KeyCode.D))
+        inputX = 1;
+    else 
+        inputX = 0;
+
+    if (Input.GetKey(KeyCode.S))
+        inputY = -1;
+    else if (Input.GetKey(KeyCode.W))
+        inputY = 1;
+    else 
+        inputY = 0;
+
+
+    gameObject.GetComponent<Rigidbody2D>().velocity =new Vector2(
+        speed.x * inputX,
+        speed.y * inputY);
+ 
 
     
-    Vector2 newPos = transform.position + new Vector3(movement.x, movement.y, 0);
+    Vector3 newPos = transform.position;
 
+    if (camera.transform.position.x+7.7f < newPos.x) {
+        newPos.x = camera.transform.position.x+7.7f;
+    } else if (camera.transform.position.x-7.7f > newPos.x) {
+        newPos.x = camera.transform.position.x-7.7f;
+    }
+    if (camera.transform.position.y+4.4f < newPos.y) {
+        newPos.y = camera.transform.position.y+4.4f;
+    } else if (camera.transform.position.y-4.4f > newPos.y) {
+        newPos.y = camera.transform.position.y-4.4f;
+    }
     transform.position = newPos;
+
   }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        print(1);
-        
+    void OnCollision2D(Collision2D collision)
+    {   
     }
 }

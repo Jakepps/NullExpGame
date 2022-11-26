@@ -20,11 +20,11 @@ public class cameraMove : MonoBehaviour
     void Update()
     {
         Vector3 delta =  (newPos-transform.position);
-        transform.position += new Vector3(delta.x*0.05f, delta.y*0.05f, delta.z);
+        //    transform.position += new Vector3(delta.x*0.01f, delta.y*0.01f, delta.z);
 
         if (isCameraMove)  {
             if (player.transform.position.x - transform.position.x > 5) {
-                newPos = new Vector3(player.transform.position.x - 5, transform.position.y, -10);  
+                transform.position = new Vector3(player.transform.position.x - 5, transform.position.y, -10);  
             }
             if (transform.position.x > stopPos[nowStop]) {
                 transform.position = new Vector3(stopPos[nowStop], transform.position.y, -10);
