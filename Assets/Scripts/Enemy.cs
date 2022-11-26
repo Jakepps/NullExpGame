@@ -6,10 +6,13 @@ public class Enemy : MonoBehaviour
 {
     int health = 100;
 
+    bool flipX = false;
+
     // Attack others players by radius 10
     void Attack()
     {
         // find all enemy in radius 10 with offset 10
+
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 2);
 
         foreach (var hitCollider in hitColliders)
@@ -17,11 +20,13 @@ public class Enemy : MonoBehaviour
             // if enemy is found
             if (hitCollider.gameObject.tag == "Player")
             {
+                gameObject.GetComponentInChildren<Animator>().Play("Punch", 0, 0.5f);
                 Debug.Log("Player found");
                 // get enemy script
                 Player player = hitCollider.gameObject.GetComponent<Player>();
                 // attack enemy
                 player.TakeDamage(10);
+                player.TakeImpulse(new Vector2((flipX ? -1 : 1) * 1000f, 0));
             }
         }
     }
@@ -32,19 +37,28 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             Attack();
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(Random.Range(0.3f, 1f));
         }
     }
 
     //take damage
     public void TakeDamage(int damage)
     {
+        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.2f);
         health -= damage;
         if (health <= 0)
         {
             Die();
         }
 
+    }
+
+
+
+    //take damage
+    public void TakeImpulse(Vector2 vector)
+    {
+        gameObject.GetComponent<Rigidbody2D>().AddForce(vector);
     }
 
     //die
@@ -56,6 +70,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        flipX = gameObject.GetComponentInChildren<SpriteRenderer>().flipX;
         StartCoroutine(AttackCoroutine());
     }
 
@@ -79,7 +94,7 @@ public class Enemy : MonoBehaviour
     {
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        float Speed = Random.Range(0.1F, 1.0F);
+        float Speed = 2;
 
         // move towards player
         Vector2 target = player.transform.position;
@@ -90,6 +105,14 @@ public class Enemy : MonoBehaviour
             target = new Vector2(target.x, transform.position.y);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);
+
+
+        gameObject.GetComponentInChildren<SpriteRenderer>().flipX = target.x < transform.position.x;
+
+        if (Vector2.Distance(transform.position, target) < 15)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);
+        }
+
     }
 }

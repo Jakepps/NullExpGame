@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    //public GameObject tett;
     int health = 100;
 
     // Attack others players by radius 10
@@ -16,7 +15,13 @@ public class Player : MonoBehaviour
         Debug.Log("Attack");
         gameObject.GetComponentInChildren<Animator>().Play("Punch", 0, 0.5f);
         // find all enemy Collider2D in radius 2 with offset 2
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(flipX ? -1 : 1 * 2, 0, 0), 2);
+        // Instantiate(
+        //     GameObject.FindGameObjectWithTag("Circle"),
+        //     transform.position + new Vector3((flipX ? -1 : 1) * 1.5f, 1, 0),
+        //     Quaternion.identity
+        // );
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3((flipX ? -1 : 1) * 1.5f, 0, 0), 1.5f);
+
         Debug.Log(hitColliders.Length);
         foreach (var hitCollider in hitColliders)
         {
@@ -29,6 +34,7 @@ public class Player : MonoBehaviour
                 Enemy enemy = hitCollider.gameObject.GetComponent<Enemy>();
                 // attack enemy
                 enemy.TakeDamage(10);
+                enemy.TakeImpulse(new Vector2((flipX ? -1 : 1) * 1000f, 0));
             }
         }
 
@@ -39,6 +45,7 @@ public class Player : MonoBehaviour
     //take damage
     public void TakeDamage(int damage)
     {
+        gameObject.GetComponentInChildren<Animator>().Play("getDamage", 0, 0.2f);
         health -= damage;
         if (health <= 0)
         {
@@ -46,10 +53,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    // take impulse 
+    public void TakeImpulse(Vector2 impulse)
+    {
+        gameObject.GetComponent<Rigidbody2D>().AddForce(impulse);
+    }
+
     //die
     void Die()
     {
         Destroy(gameObject);
+
+        //exit in the app
+        Application.Quit();
     }
 
 
