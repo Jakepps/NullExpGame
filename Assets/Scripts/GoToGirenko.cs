@@ -7,6 +7,6 @@ public class GoToGirenko : MonoBehaviour
 {
     public void OpenGir()
     {
-        SceneManager.LoadScene("train");
+        SceneManager.LoadScene("oneLevel");
     }
 }
