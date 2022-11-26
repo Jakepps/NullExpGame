@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    //public GameObject tett;
     int health = 100;
 
     // Attack others players by radius 10
@@ -13,6 +14,8 @@ public class Player : MonoBehaviour
         Debug.Log("Attack");
         // find all enemy Collider2D in radius 2 with offset 2
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(2, 0, 0), 2);
+        // GameObject instantiatedObject = Instantiate(tett);
+        // instantiatedObject.transform.position = transform.position + new Vector3(2, 0, 0);
         Debug.Log(hitColliders.Length);
         foreach (var hitCollider in hitColliders)
         {
