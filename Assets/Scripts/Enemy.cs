@@ -107,7 +107,10 @@ public class Enemy : MonoBehaviour
 
 
         gameObject.GetComponentInChildren<SpriteRenderer>().flipX = target.x < transform.position.x;
+        if (Vector2.Distance(transform.position, target) < 15)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);
+        }
 
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);
     }
 }
