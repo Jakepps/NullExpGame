@@ -5,6 +5,8 @@ using UnityEngine;
 public class windowCityMove : MonoBehaviour
 {
     public GameObject camera;
+    public float speed = 0.01f;
+    public bool isRandomOffset = false;
     void Start()
     {
         
@@ -12,9 +14,14 @@ public class windowCityMove : MonoBehaviour
 
     void Update()
     {
-        transform.position += new Vector3(-0.01f, 0, 0);
+        transform.position += new Vector3(-speed, 0, 0);
         if (camera.transform.position.x - transform.position.x > 13.4f) {
-            transform.position = new Vector3(transform.position.x + 29.99f, transform.position.y, transform.position.z);
+            if (!isRandomOffset) {
+                transform.position = new Vector3(transform.position.x + 29.99f, transform.position.y, transform.position.z);
+            } else {
+                transform.position = new Vector3(transform.position.x + 29.99f + Random.Range(30*10,30*20), transform.position.y, transform.position.z);
+            }
+            
         }
     }
 }
