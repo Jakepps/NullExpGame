@@ -10,7 +10,7 @@ public class cameraMove : MonoBehaviour
     public List<float> stopPos; 
     private int nowStop = 0;
 
-    public bool isCameraMove = false;
+    public bool isCameraMove = true;
 
     private Vector3 newPos;
     void Start()
@@ -29,7 +29,7 @@ public class cameraMove : MonoBehaviour
                 print(3);
                 camera.transform.position = new Vector3(stopPos[nowStop], camera.transform.position.y, -10);
                 nowStop++;
-                isCameraMove = false;
+                isCameraMove = true;
             }
         } 
     }
