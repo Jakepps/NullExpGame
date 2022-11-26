@@ -7,8 +7,10 @@ public class movePlayer : MonoBehaviour
   public Vector2 speed = new Vector2(50, 50);
   public GameObject camera;
 
+  private bool startMov = true;
 
   void Start() {
+
   }
   void Update()
   {

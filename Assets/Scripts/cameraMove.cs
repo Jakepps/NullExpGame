@@ -6,6 +6,7 @@ public class cameraMove : MonoBehaviour
 {
     public GameObject player;
 
+    public GameObject camera;
     public List<float> stopPos; 
     private int nowStop = 0;
 
@@ -19,15 +20,14 @@ public class cameraMove : MonoBehaviour
 
     void Update()
     {
-        Vector3 delta =  (newPos-transform.position);
-        //    transform.position += new Vector3(delta.x*0.01f, delta.y*0.01f, delta.z);
-
         if (isCameraMove)  {
-            if (player.transform.position.x - transform.position.x > 5) {
-                transform.position = new Vector3(player.transform.position.x - 5, transform.position.y, -10);  
+            if (player.transform.position.x - camera.transform.position.x > 5) {
+                print(new Vector3(player.transform.position.x - 5, camera.transform.position.y, -10));
+                camera.transform.position = new Vector3(player.transform.position.x - 5, camera.transform.position.y, -10);  
             }
-            if (transform.position.x > stopPos[nowStop]) {
-                transform.position = new Vector3(stopPos[nowStop], transform.position.y, -10);
+            if (camera.transform.position.x > stopPos[nowStop]) {
+                print(3);
+                camera.transform.position = new Vector3(stopPos[nowStop], camera.transform.position.y, -10);
                 nowStop++;
                 isCameraMove = false;
             }
