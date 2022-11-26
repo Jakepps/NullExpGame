@@ -10,9 +10,6 @@ public class movePlayer : MonoBehaviour
 
   public GameObject camera;
 
-    
-  private Vector3 lastMove;
-
 
   void Update()
   {
@@ -28,4 +25,10 @@ public class movePlayer : MonoBehaviour
 
     transform.position = newPos;
   }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        print(1);
+        
+    }
 }
