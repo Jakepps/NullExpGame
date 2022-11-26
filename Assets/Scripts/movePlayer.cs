@@ -4,59 +4,69 @@ using UnityEngine;
 
 public class movePlayer : MonoBehaviour
 {
-  public Vector2 speed = new Vector2(50, 50);
+    public Vector2 speed = new Vector2(50, 50);
 
-  private Vector2 movement;
+    private Vector2 movement;
 
-  public GameObject camera;
+    public GameObject camera;
 
-  private bool shouldMove = true;
-
-
-  void Start() {
-  }
-  void Update()
-  {
-    int inputX, inputY;
-
-    if (Input.GetKey(KeyCode.A))
-        inputX = -1;
-    else if (Input.GetKey(KeyCode.D))
-        inputX = 1;
-    else 
-        inputX = 0;
-
-    if (Input.GetKey(KeyCode.S))
-        inputY = -1;
-    else if (Input.GetKey(KeyCode.W))
-        inputY = 1;
-    else 
-        inputY = 0;
+    private bool shouldMove = true;
 
 
-    gameObject.GetComponent<Rigidbody2D>().velocity =new Vector2(
-        speed.x * inputX,
-        speed.y * inputY);
- 
-
-    
-    Vector3 newPos = transform.position;
-
-    if (camera.transform.position.x+7.7f < newPos.x) {
-        newPos.x = camera.transform.position.x+7.7f;
-    } else if (camera.transform.position.x-7.7f > newPos.x) {
-        newPos.x = camera.transform.position.x-7.7f;
+    void Start()
+    {
     }
-    if (camera.transform.position.y+4.4f < newPos.y) {
-        newPos.y = camera.transform.position.y+4.4f;
-    } else if (camera.transform.position.y-4.4f > newPos.y) {
-        newPos.y = camera.transform.position.y-4.4f;
-    }
-    transform.position = newPos;
+    void Update()
+    {
+        int inputX, inputY;
 
-  }
+        if (Input.GetKey(KeyCode.A))
+            inputX = -1;
+        else if (Input.GetKey(KeyCode.D))
+            inputX = 1;
+        else
+            inputX = 0;
+
+        if (Input.GetKey(KeyCode.S))
+            inputY = -1;
+        else if (Input.GetKey(KeyCode.W))
+            inputY = 1;
+        else
+            inputY = 0;
+
+        if (inputX != 0)
+            gameObject.GetComponentInChildren<SpriteRenderer>().flipX = inputX == 1 ? false : true;
+
+
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
+            speed.x * inputX,
+            speed.y * inputY);
+
+
+
+        Vector3 newPos = transform.position;
+
+        if (camera.transform.position.x + 7.7f < newPos.x)
+        {
+            newPos.x = camera.transform.position.x + 7.7f;
+        }
+        else if (camera.transform.position.x - 7.7f > newPos.x)
+        {
+            newPos.x = camera.transform.position.x - 7.7f;
+        }
+        if (camera.transform.position.y + 4.4f < newPos.y)
+        {
+            newPos.y = camera.transform.position.y + 4.4f;
+        }
+        else if (camera.transform.position.y - 4.4f > newPos.y)
+        {
+            newPos.y = camera.transform.position.y - 4.4f;
+        }
+        transform.position = newPos;
+
+    }
 
     void OnCollision2D(Collision2D collision)
-    {   
+    {
     }
 }
