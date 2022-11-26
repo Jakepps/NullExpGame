@@ -10,29 +10,18 @@ public class Enemy : MonoBehaviour
     void Attack()
     {
         // find all enemy in radius 10 with offset 10
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 2);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 10);
 
         foreach (var hitCollider in hitColliders)
         {
             // if enemy is found
             if (hitCollider.gameObject.tag == "Player")
             {
-                Debug.Log("Player found");
                 // get enemy script
-                Player player = hitCollider.gameObject.GetComponent<Player>();
+                Enemy enemy = hitCollider.gameObject.GetComponent<Enemy>();
                 // attack enemy
-                player.TakeDamage(10);
+                enemy.TakeDamage(10);
             }
-        }
-    }
-
-    // coroutine for attack
-    IEnumerator AttackCoroutine()
-    {
-        while (true)
-        {
-            Attack();
-            yield return new WaitForSecondsRealtime(0.5f);
         }
     }
 
@@ -56,40 +45,12 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(AttackCoroutine());
+
     }
-
-    void FixedUpdate()
-    {
-        // find player
-        // GameObject player = GameObject.FindGameObjectWithTag("Player");
-        // float Speed = Random.Range(0.1F, 1.0F);
-
-        // // move towards player
-        // transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Speed / 5);
-
-        // Vector3 direction_to_player = (player.transform.position - transform.position).normalized;
-        // GetComponent<Rigidbody2D>().AddForce(direction_to_player * Speed);
-    }
-
-    // Update is called once per frame
 
     // Update is called once per frame
     void Update()
     {
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        float Speed = Random.Range(0.1F, 1.0F);
-
-        // move towards player
-        Vector2 target = player.transform.position;
-        // Debug.Log(Vector2.Distance(transform.position, target));
-        // Debug.Log(Vector2.Distance(transform.position, target) > 2f);
-        if (Mathf.Abs(target.x - transform.position.x) > 2f)
-        {
-            target = new Vector2(target.x, transform.position.y);
-        }
-
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * Speed);
     }
 }
